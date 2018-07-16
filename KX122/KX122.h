@@ -24,7 +24,7 @@
 #ifndef _KX122_H_
 #define _KX122_H_
 
-#define KX122_DEVICE_ADDRESS_1E   (0x1E)    // 7bit Addrss
+#define KX122_DEVICE_ADDRESS_1E   (0x1E)    // 7bit Address
 #define KX122_DEVICE_ADDRESS_1F   (0x1F)    // 7bit Address
 #define KX122_WAI_VAL             (0x1B)
 
