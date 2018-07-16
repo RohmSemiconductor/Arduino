@@ -19,12 +19,9 @@ https://developer.sony.com/develop/spresense/
 
 ###  Installing the sensor & BLE example sketches ###
 
-Place the example sketches inside your Arduino folder, which should be located in your users documents folder.
-
-Open the folder of the example you want to test, and open the sketch file. The Arduino IDE should start with the selected sketch open.
-
-You can then proceed to upload the example sketch to your Spresense board by clicking <B>Upload</B>
-
-After the sketch has finished uploading, open the serial monitor by clicking Tools -> Serial Monitor or use the hotkey Ctrl+Shift+M. 
-
-The sketch should start running, if not, please reset the board by pressing the reboot button on the main board. Please ensure that the baud rate on the serial monitor is set to 115200.
+1. Place the example sketches inside your Arduino folder, which should be located in your users documents folder.
+2. Open the folder of the example you want to test, and open the sketch file. The Arduino IDE should start with the selected sketch open.
+3. You can then proceed to upload the example sketch to your Spresense board by clicking <B>Upload</B>
+4. After the sketch has finished uploading, open the serial monitor by clicking Tools -> Serial Monitor or use the hotkey Ctrl+Shift+M. 
+5. The sketch should start running, if not, please reset the board by pressing the reboot button on the main board.
+6. To receive the correct data on the serial monitor, please ensure that the baud rate on the serial monitor is set to 115200.
