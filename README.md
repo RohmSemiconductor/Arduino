@@ -38,3 +38,4 @@ https://developer.sony.com/develop/spresense/
 5. The sketch should start running, if not, please reset the board by pressing the reboot button on the main board.
 6. To receive the correct data on the serial monitor, please ensure that the baud rate on the serial monitor is set to 115200.
 
+![](images/serial_monitor.png)
