@@ -7,4 +7,9 @@ Adruino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 * Pressure sensor BM1383AGLV, I2C, SAD=0x5D
 * Bluetooth LE MK71251-02, UART
 
-# How to setup and test devices
+# How to setup and test devices with Sony Spresense
+
+About Sony Spresense
+https://developer.sony.com/develop/spresense/
+
+
