@@ -6,3 +6,5 @@ Adruino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 * Magnetosensor BM1422AGMV, I2C, SAD=0x0F
 * Pressure sensor BM1383AGLV, I2C, SAD=0x5D
 * Bluetooth LE MK71251-02, UART
+
+# How to setup and test devices
