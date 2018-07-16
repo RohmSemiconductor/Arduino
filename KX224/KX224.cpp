@@ -1,14 +1,18 @@
 /*****************************************************************************
-  KX122.cpp
+  KX224.cpp
+
  Copyright (c) 2018 ROHM Co.,Ltd.
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,84 +22,104 @@
  THE SOFTWARE.
 ******************************************************************************/
 //#include <avr/pgmspace.h>
+#include <Arduino.h>
 #include <Wire.h>
-#include <arduino.h>
-#include "KX122.h"
+#include "KX224.h"
 
-KX122::KX122(int slave_address)
+KX224::KX224(int slave_address)
 {
   _device_address = slave_address;
+  _g_sens = 4096;
 }
 
-byte KX122::init(void)
+KX224::~KX224()
+{
+  _device_address = 0;
+  _g_sens = 0;
+}
+
+byte KX224::init(void)
 {
   byte rc;
   unsigned char reg;
   unsigned char gsel;
-  int i;
 
-  rc = read(KX122_WHO_AM_I, &reg, sizeof(reg));
+  rc = read(KX224_WHO_AM_I, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't access KX122");
+    Serial.println("Can't access KX224");
     return (rc);
   } 
-  Serial.print("KX122_WHO_AMI Register Value = 0x");
+  Serial.print("KX224_WHO_AMI Register Value = 0x");
   Serial.println(reg, HEX);
   
-  if (reg != KX122_WAI_VAL) {
-    Serial.println("Can't find KX122");
+  if (reg != KX224_WAI_VAL) {
+    Serial.println("Can't find KX224");
     return (rc);
   }
 
-  reg = KX122_CNTL1_VAL;
-  rc = write(KX122_CNTL1, &reg, sizeof(reg));
+  reg = KX224_CNTL1_VAL;
+  rc = write(KX224_CNTL1, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write KX122 CNTL1 register at first");
+    Serial.println("Can't write KX224 CNTL1 register at first");
     return (rc);
   }
 
-  reg = KX122_ODCNTL_VAL;
-  rc = write(KX122_ODCNTL, &reg, sizeof(reg));
+  reg = KX224_ODCNTL_VAL;
+  rc = write(KX224_ODCNTL, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write KX122 ODCNTL register");
+    Serial.println("Can't write KX224 ODCNTL register");
     return (rc);
   }
 
-  rc = read(KX122_CNTL1, &reg, sizeof(reg));
+  rc = read(KX224_CNTL1, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't read KX122 CNTL1 register");
+    Serial.println("Can't read KX224 CNTL1 register");
     return (rc);
   }
-  gsel = reg & KX122_CNTL1_GSELMASK;
+  gsel = reg & KX224_CNTL1_GSELMASK;
 
-  reg |= KX122_CNTL1_PC1;
-  rc = write(KX122_CNTL1, &reg, sizeof(reg));
+  reg |= KX224_CNTL1_PC1;
+  rc = write(KX224_CNTL1, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write KX122 CNTL1 register at second");
+    Serial.println("Can't write KX224 CNTL1 register at second");
     return (rc);
   }
   
   switch(gsel) {
-    case KX122_CNTL1_GSEL_2G : _g_sens = 16384; break;
-    case KX122_CNTL1_GSEL_4G : _g_sens = 8192;  break;
-    case KX122_CNTL1_GSEL_8G : _g_sens = 4096;  break;
-    default: break;
+    case KX224_CNTL1_GSEL_8G :
+      // (Equivalent counts) / (Range) = (32768 / 8)
+      _g_sens = 4096;
+    break;
+
+    case KX224_CNTL1_GSEL_16G :
+      // (Equivalent counts) / (Range) = (32768 / 16)
+      _g_sens = 2048;
+    break;
+
+    case KX224_CNTL1_GSEL_32G :
+      // (Equivalent counts) / (Range) = (32768 / 32)
+      _g_sens = 1024;
+    break;
+
+    default:
+    break;
   }
+  return (rc);
 }
 
-byte KX122::get_rawval(unsigned char *data)
+byte KX224::get_rawval(unsigned char *data)
 {
   byte rc;
 
-  rc = read(KX122_XOUT_L, data, 6);
+  rc = read(KX224_XOUT_L, data, 6);
   if (rc != 0) {
-    Serial.println("Can't get KX122 accel value");
+    Serial.println("Can't get KX224 accel value");
   }
 
   return (rc);
 }
 
-byte KX122::get_val(float *data)
+byte KX224::get_val(float *data)
 {
   byte rc;
   unsigned char val[6];
@@ -118,10 +142,9 @@ byte KX122::get_val(float *data)
   return (rc);  
 }
 
-byte KX122::write(unsigned char memory_address, unsigned char *data, unsigned char size)
+byte KX224::write(unsigned char memory_address, unsigned char *data, unsigned char size)
 {
   byte rc;
-  unsigned int cnt;
 
   Wire.beginTransmission(_device_address);
   Wire.write(memory_address);
@@ -130,7 +153,7 @@ byte KX122::write(unsigned char memory_address, unsigned char *data, unsigned ch
   return (rc);
 }
 
-byte KX122::read(unsigned char memory_address, unsigned char *data, int size)
+byte KX224::read(unsigned char memory_address, unsigned char *data, int size)
 {
   byte rc;
   unsigned char cnt;
@@ -139,11 +162,10 @@ byte KX122::read(unsigned char memory_address, unsigned char *data, int size)
   Wire.write(memory_address);
   rc = Wire.endTransmission(false);
   if (rc != 0) {
-    Serial.print("Read failed!");
     return (rc);
   }
 
-  Wire.requestFrom((int)_device_address, (int)size, (int)true);
+  Wire.requestFrom(_device_address, size, true);
   cnt = 0;
   while(Wire.available()) {
     data[cnt] = Wire.read();

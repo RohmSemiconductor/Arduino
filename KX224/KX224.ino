@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BM1422AGMV.ino
+  KX224_I2C.ino
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -22,35 +22,43 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include <BM1422AGMV.h>
+#include "KX224.h"
 
-BM1422 bm1422(BM1422_DEVICE_ADDRESS_0F);
+KX224 kx224(KX224_DEVICE_ADDRESS_1E);
 
 void setup() {
   byte rc;
+
   Serial.begin(115200);
-  Serial.println("Rohm BM1422AGMV Magnet Sensor sample");
+  while (!Serial);
+
   Wire.begin();
-  rc = bm1422.init();
+
+  rc = kx224.init();
+  if (rc != 0) {
+    Serial.println("KX224 initialization failed");
+    Serial.flush();
+  }
 }
 
 void loop() {
   byte rc;
-  float mag[3];
-  rc = bm1422.get_val(mag);
+  float acc[3];
 
+  rc = kx224.get_val(acc);
   if (rc == 0) {
-    Serial.println("BM1422 XDATA=");
-    Serial.print(mag[0], 3);
-    Serial.println("[uT]");
-    Serial.println("BM1422 YDATA=");
-    Serial.print(mag[1], 3);
-    Serial.println("[uT]");
-    Serial.println("BM1422 ZDATA=");
-    Serial.print(mag[2], 3);
-    Serial.println("[uT]");
-    Serial.println();    
+    Serial.write("KX224 (X) = ");
+    Serial.print(acc[0]);
+    Serial.println(" [g]");
+    Serial.write("KX224 (Y) = ");
+    Serial.print(acc[1]);
+    Serial.println(" [g]");
+    Serial.write("KX224 (Z) = ");
+    Serial.print(acc[2]);
+    Serial.println(" [g]");
+    Serial.println();
   }
-
+ 
   delay(500);
+
 }

@@ -1,5 +1,5 @@
 /*****************************************************************************
-  KX122.h
+  KX224.h
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -21,40 +21,42 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#ifndef _KX122_H_
-#define _KX122_H_
+#ifndef _KX224_H_
+#define _KX224_H_
 
-#define KX122_DEVICE_ADDRESS_1E   (0x1E)    // 7bit Address
-#define KX122_DEVICE_ADDRESS_1F   (0x1F)    // 7bit Address
-#define KX122_WAI_VAL             (0x1B)
+#define KX224_DEVICE_ADDRESS_1E   (0x1E)    // 7bit Addrss
+#define KX224_DEVICE_ADDRESS_1F   (0x1F)    // 7bit Address
+#define KX224_WAI_VAL             (0x2B)
 
-#define KX122_XOUT_L              (0x06)
-#define KX122_WHO_AM_I            (0x0F)
-#define KX122_CNTL1               (0x18)
-#define KX122_ODCNTL              (0x1B)
+#define KX224_XOUT_L              (0x06)
+#define KX224_WHO_AM_I            (0x0F)
+#define KX224_CNTL1               (0x18)
+#define KX224_ODCNTL              (0x1B)
 
-#define KX122_CNTL1_TPE           (1 << 0)
-#define KX122_CNTL1_WUFE          (1 << 1)
-#define KX122_CNTL1_TDTE          (1 << 2)
-#define KX122_CNTL1_GSELMASK      (0x18)
-#define KX122_CNTL1_GSEL_2G       (0x00)
-#define KX122_CNTL1_GSEL_4G       (0x08)
-#define KX122_CNTL1_GSEL_8G       (0x10)
-#define KX122_CNTL1_DRDYE         (1 << 5)
-#define KX122_CNTL1_RES           (1 << 6)
-#define KX122_CNTL1_PC1           (1 << 7)
+#define KX224_CNTL1_TPE           (1 << 0)
+#define KX224_CNTL1_WUFE          (1 << 1)
+#define KX224_CNTL1_TDTE          (1 << 2)
+#define KX224_CNTL1_GSELMASK      (0x18)
+#define KX224_CNTL1_GSEL_8G       (0x00)
+#define KX224_CNTL1_GSEL_16G      (0x08)
+#define KX224_CNTL1_GSEL_32G      (0x10)
+#define KX224_CNTL1_DRDYE         (1 << 5)
+#define KX224_CNTL1_RES           (1 << 6)
+#define KX224_CNTL1_PC1           (1 << 7)
 
-#define KX122_ODCNTL_OSA_50HZ     (2)
-#define KX122_ODCNTL_LPRO         (1 << 6)
-#define KX122_IIR_BYPASS          (1 << 7)
+#define KX224_ODCNTL_OSA_50HZ     (2)
+#define KX224_ODCNTL_LPRO         (1 << 6)
+#define KX224_IIR_BYPASS          (1 << 7)
 
-#define KX122_CNTL1_VAL           (KX122_CNTL1_RES | KX122_CNTL1_GSEL_2G)
-#define KX122_ODCNTL_VAL          (KX122_ODCNTL_OSA_50HZ)
+#define KX224_CNTL1_VAL           (KX224_CNTL1_RES | KX224_CNTL1_GSEL_8G)
+#define KX224_ODCNTL_VAL          (KX224_ODCNTL_OSA_50HZ)
 
-class KX122
+
+class KX224
 {
   public:
-      KX122(int slave_address);
+    KX224(int slave_address);
+    ~KX224();
     byte init(void);
     byte get_rawval(unsigned char *data);
     byte get_val(float *data);
@@ -65,4 +67,4 @@ class KX122
     unsigned short _g_sens;
 };
 
-#endif // _KX122_H_
+#endif // _KX224_H_

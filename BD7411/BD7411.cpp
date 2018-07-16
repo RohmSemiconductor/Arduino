@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BM1383GLV.ino
+  BD7411.cpp
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -21,34 +21,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#include <Wire.h>
-#include <BM1383AGLV.h>
+//#include <avr/pgmspace.h>
+#include <Arduino.h>
+#include "BD7411.h"
 
-BM1383AGLV bm1383;
+BD7411::BD7411(void)
+{
 
-void setup() {
-  byte rc;
-
-  Serial.begin(115200);
-  while (!Serial);
-
-  Wire.begin();
-
-  rc = bm1383.init();
 }
 
-void loop() {
-  byte rc;
-  float press;
+void BD7411::init(int pin)
+{
+  _out_pin = pin;
+}
 
-  rc = bm1383.get_val(&press);
-  if (rc == 0) {
-    Serial.write("BM1383AGLV (PRESS) = ");
-    Serial.print(press);
-    Serial.println(" [hPa]");
-    Serial.println();
-  }
-
-  delay(500);
-
+int BD7411::readoutpin(void)
+{
+  int rc;
+  
+  rc = digitalRead(_out_pin);
+  return (rc);
 }
