@@ -11,7 +11,7 @@ Adruino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 * Hall Effect sensor BD7411G, GPIO
 * Bluetooth LE MK71251-02, UART
 
-> *Boldened is default device address 
+*Boldened is default device address 
 
 # How to setup and test devices with Sony Spresense
 
