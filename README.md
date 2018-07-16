@@ -3,8 +3,12 @@ Adruino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
 # Supported devices
 * Accelerometer KX122, I2C, SAD=0x1F
+* Accelerometer KX224, I2C, SAD=<B>0x1E</B>/0x1F
 * Magnetosensor BM1422AGMV, I2C, SAD=0x0F
 * Pressure sensor BM1383AGLV, I2C, SAD=0x5D
+* Color sensor BH1749NUC, I2C, SAD=0x38/<B>0x39</B>
+* ALS/Proximity sensor RPR-0521RS, I2C
+* Hall Effect sensor BD7411G, GPIO
 * Bluetooth LE MK71251-02, UART
 
 # How to setup and test devices with Sony Spresense
