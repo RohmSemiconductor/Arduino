@@ -7,7 +7,7 @@ Adruino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 * Magnetosensor BM1422AGMV, I2C, SAD=0x0F
 * Pressure sensor BM1383AGLV, I2C, SAD=0x5D
 * Color sensor BH1749NUC, I2C, SAD=0x38/<B>0x39</B>*
-* ALS/Proximity sensor RPR-0521RS, I2C
+* ALS/Proximity sensor RPR-0521RS, I2C, SAD=0x38
 * Hall Effect sensor BD7411G, GPIO
 * Bluetooth LE MK71251-02, UART
 
