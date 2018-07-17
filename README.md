@@ -22,7 +22,8 @@ https://developer.sony.com/develop/spresense/
  For help regarding the installation of the Arduino IDE please refer to
  [Setting up the Arduino IDE](https://developer.sony.com/develop/spresense/developer-tools/get-started-using-arduino-ide/set-up-the-arduino-ide/ "Title")
 
-
+ The sketches for the examples are located in the same directory as the drivers.
+ 
 ###  Installing the sensor & BLE example sketches ###
 
 1. Place the example sketches inside your Arduino folder, which should be located in your users documents folder.
