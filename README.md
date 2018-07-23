@@ -22,7 +22,7 @@ https://developer.sony.com/develop/spresense/
  For help regarding the installation of the Arduino IDE please refer to
  [Setting up the Arduino IDE](https://developer.sony.com/develop/spresense/developer-tools/get-started-using-arduino-ide/set-up-the-arduino-ide/ "Title")
 
- The sketches for the examples are located in the same directory as the drivers.
+ The example sketches are located in the same directory as the drivers.
  
 ###  Installing the sensor & BLE example sketches ###
 
@@ -36,7 +36,24 @@ https://developer.sony.com/develop/spresense/
 
 ![](images/arduino_ide.png)
 
-5. The sketch should start running, if not, please reset the board by pressing the reboot button on the main board.
+5. The sketch should start, if not, please reset the board by pressing the reboot button on the main board.
 6. To receive the correct data on the serial monitor, please ensure that the baud rate on the serial monitor is set to 115200.
 
 ![](images/serial_monitor.png)
+
+### Testing the bluetooth module
+
+ You need to download the LAPIS BLE tool for your phone to test the module.
+
+1. Open the MK71251-02 sketch, upload it and open the serial monitor
+2. Open the LAPIS BLE tool on your phone, and enable bluetooth
+3. Locate the MK71251-02 on the list of devices 
+* If you do not see it on the list, you may need to reboot your board
+4. Connect to the module
+5. Open the serial port profile 
+* Anything you type should show up on the serial monitor
+* If you type 'Z', the serial port profile should show 'WRITING TEST'
+
+
+
+
