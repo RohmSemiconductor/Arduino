@@ -17,7 +17,7 @@ Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
 ### BLE Add-on board:
 
-![](images/ble_pins.jpg)
+![](images/ble_pins2.jpg)
 
 ### Sensor Add-on board:
 
