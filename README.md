@@ -1,7 +1,7 @@
 # Overview of this repository
 Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
-# Supported devices
+## Supported devices
 * Accelerometer KX122, I2C, SAD=0x1F
 * Accelerometer KX224, I2C, SAD=<B>0x1E</B>*/0x1F
 * Magnetosensor BM1422AGMV, I2C, SAD=0x0F
@@ -13,7 +13,7 @@ Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
 *Boldened is default device address 
 
-# Pin assignment for Sensor and BLE Add-on boards
+## Pin assignment for Sensor and BLE Add-on boards
 
 ### BLE Add-on board:
 
@@ -21,9 +21,9 @@ Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
 ### Sensor Add-on board:
 
-![](images/sens_pins.jpg)
+![](images/sens_pins2.jpg)
 
-# How to setup and test devices with Sony Spresense
+## How to setup and test devices with Sony Spresense
 
 About Sony Spresense
 https://developer.sony.com/develop/spresense/
