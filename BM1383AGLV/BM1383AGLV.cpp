@@ -21,7 +21,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-//#include <avr/pgmspace.h>
 #include <Wire.h>
 #include "arduino.h"
 #include "BM1383AGLV.h"
@@ -41,7 +40,7 @@ byte BM1383AGLV::init(void)
     Serial.println("Can't access BM1383AGLV");
     return (rc);
   }
-  Serial.println("BM1383GL ID Register Value = 0x");
+  Serial.print("BM1383GL ID Register Value = 0x");
   Serial.println(reg, HEX);
 
   if (reg != BM1383AGLV_ID_VAL) {
@@ -56,7 +55,7 @@ byte BM1383AGLV::init(void)
     return (rc);
   }
 
-  delay(1);
+  delay(WAIT_BETWEEN_POWER_DOWN_AND_RESET);
 
   reg = BM1383AGLV_RESET_VAL;
   rc = write(BM1383AGLV_RESET, &reg, sizeof(reg));
@@ -71,6 +70,10 @@ byte BM1383AGLV::init(void)
     Serial.println("Can't write BM1383AGLV MODE_CONTROL register");
     return (rc);
   }
+
+  delay(WAIT_TMT_MAX);
+
+  return (rc);
   
 }
 
@@ -78,7 +81,7 @@ byte BM1383AGLV::get_rawval(unsigned char *data)
 {
   byte rc;
 
-  rc = read(BM1383AGLV_PRESSURE_MSB, data, 3);
+  rc = read(BM1383AGLV_PRESSURE_MSB, data, GET_BYTE_PRESS_TEMP);
   if (rc != 0) {
     Serial.println("Can't get BM1383AGLV PRESS value");
   }
@@ -86,11 +89,12 @@ byte BM1383AGLV::get_rawval(unsigned char *data)
   return (rc);
 }
 
-byte BM1383AGLV::get_val( float *press)
+byte BM1383AGLV::get_val( float *press, float *temp)
 {
   byte rc;
-  unsigned char val[3];
+  unsigned char val[GET_BYTE_PRESS_TEMP];
   unsigned long rawpress;
+  short rawtemp;
 
   rc = get_rawval(val);
   if (rc != 0) {
@@ -103,8 +107,16 @@ byte BM1383AGLV::get_val( float *press)
     return (-1);
   }
 
-  *press = (float)rawpress / 2048;
+  *press = (float)rawpress / HPA_PER_COUNT;
 
+  rawtemp = ((short)val[3] << 8) | val[4];
+
+  if (rawtemp == 0) {
+    return (-1);
+  }
+
+  *temp = (float)rawtemp / DEGREES_CELSIUS_PER_COUNT;
+  
   return (rc);
 }
 

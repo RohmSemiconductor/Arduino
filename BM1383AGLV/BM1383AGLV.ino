@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BM1422AGMV.ino
+  BM1383AGLV.ino
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -22,41 +22,41 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include "BM1422AGMV.h"
+#include "BM1383AGLV.h"
 
-BM1422AGMV bm1422agmv(BM1422AGMV_DEVICE_ADDRESS_0F);
+BM1383AGLV bm1383aglv;
 
 void setup() {
   byte rc;
-  
+ 
   Serial.begin(115200);
-  Serial.println("Rohm BM1422AGMV Magnet Sensor sample");
+  while (!Serial);
+
   Wire.begin();
-  rc = bm1422agmv.init();
+
+  rc = bm1383aglv.init();
   if (rc != 0) {
-    Serial.println(F("BM1422AGMV initialization failed"));
+    Serial.println("BM1383AGLV initialization failed");
     Serial.flush();
   }
-  
 }
 
 void loop() {
   byte rc;
-  float mag[3];
-  rc = bm1422agmv.get_val(mag);
+  float press = 0, temp = 0;
 
+  rc = bm1383aglv.get_val(&press, &temp);
   if (rc == 0) {
-    Serial.print("BM1422AGMV XDATA=");
-    Serial.print(mag[0], 3);
-    Serial.println("[uT]");
-    Serial.print("BM1422AGMV YDATA=");
-    Serial.print(mag[1], 3);
-    Serial.println("[uT]");
-    Serial.print("BM1422AGMV ZDATA=");
-    Serial.print(mag[2], 3);
-    Serial.println("[uT]");
-    Serial.println();    
+    Serial.print("BM1383AGLV (PRESS) = ");
+    Serial.print(press);
+    Serial.println(" [hPa]");
+    Serial.print("BM1383AGLV (TEMP) =  ");
+    Serial.print(temp);
+    Serial.println(" [degrees Celsius]");    
+    Serial.println();
   }
 
   delay(500);
+
 }
+

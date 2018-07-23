@@ -21,102 +21,105 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-//#include <avr/pgmspace.h>
 #include <Wire.h>
 #include "arduino.h"
 #include "BM1422AGMV.h"
 
-BM1422::BM1422(int slave_address)
+BM1422AGMV::BM1422AGMV(int slave_address)
 {
   _device_address = slave_address ;
 }
 
-byte BM1422::init(void)
+byte BM1422AGMV::init(void)
 {
   byte rc;
   unsigned char reg;
   unsigned char buf[2];
 
-  rc = read(BM1422_WIA, &reg, sizeof(reg));
+  rc = read(BM1422AGMV_WIA, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't access BM1422");
+    Serial.println("Can't access BM1422AGMV");
     return (rc);
   }
-  Serial.print("BM1422_WHO_AMI Register Value = 0x");
+  Serial.print("BM1422AGMV_WHO_AMI Register Value = 0x");
   Serial.println(reg, HEX);
 
-  if (reg != BM1422_WIA_VAL) {
-    Serial.println("Can't find BM1422");
+  if (reg != BM1422AGMV_WIA_VAL) {
+    Serial.println("Can't find BM1422AGMV");
     return (rc);
   }
 
   // Step1
-  reg = BM1422_CNTL1_VAL;
-  rc = write(BM1422_CNTL1, &reg, sizeof(reg));
+  reg = BM1422AGMV_CNTL1_VAL;
+  rc = write(BM1422AGMV_CNTL1, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write BM1422_CNTL1 Register");
+    Serial.println("Can't write BM1422AGMV_CNTL1 Register");
     return (rc);
   }
 
   // Check 12bit or 14bit
-  buf[0] = (BM1422_CNTL1_VAL & BM1422_CNTL1_OUT_BIT);
-  if (buf[0] == BM1422_CNTL1_OUT_BIT) {
-    _sens = BM1422_14BIT_SENS;
+  buf[0] = (BM1422AGMV_CNTL1_VAL & BM1422AGMV_CNTL1_OUT_BIT);
+  if (buf[0] == BM1422AGMV_CNTL1_OUT_BIT) {
+    _sens = BM1422AGMV_14BIT_SENS;
   } else {
-    _sens = BM1422_12BIT_SENS;
+    _sens = BM1422AGMV_12BIT_SENS;
   }
 
-  buf[0] = (BM1422_CNTL4_VAL >> 8) & 0xFF;
-  buf[1] = (BM1422_CNTL4_VAL & 0xFF);
-  rc = write(BM1422_CNTL4, buf, sizeof(buf));
+  delay(1);
+  
+  buf[0] = (BM1422AGMV_CNTL4_VAL >> 8) & 0xFF;
+  buf[1] = (BM1422AGMV_CNTL4_VAL & 0xFF);
+  rc = write(BM1422AGMV_CNTL4, buf, sizeof(buf));
   if (rc != 0) {
-    Serial.println("Can't write BM1422_CNTL4 Register");
+    Serial.println("Can't write BM1422AGMV_CNTL4 Register");
     return (rc);
   }
 
   // Step2
-  reg = BM1422_CNTL2_VAL;
-  rc = write(BM1422_CNTL2, &reg, sizeof(reg));
+  reg = BM1422AGMV_CNTL2_VAL;
+  rc = write(BM1422AGMV_CNTL2, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write BM1422_CNTL2 Register");
+    Serial.println("Can't write BM1422AGMV_CNTL2 Register");
     return (rc);
   }
 
   // Step3
 
+  // Option
+  reg = BM1422AGMV_AVE_A_VAL;
+  rc = write(BM1422AGMV_AVE_A, &reg, sizeof(reg));
+  if (rc != 0) {
+    Serial.println("Can't write BM1422AGMV_AVE_A Register");
+    return (rc);
+  }
+  
   return (rc);
 }
 
-byte BM1422::get_rawval(unsigned char *data)
+byte BM1422AGMV::get_rawval(unsigned char *data)
 {
   byte rc;
   unsigned char reg;
 
   // Step4
-  reg = BM1422_CNTL3_VAL;
-  rc = write(BM1422_CNTL3, &reg, sizeof(reg));
+  reg = BM1422AGMV_CNTL3_VAL;
+  rc = write(BM1422AGMV_CNTL3, &reg, sizeof(reg));
   if (rc != 0) {
-    Serial.println("Can't write BM1422_CNTL3 Register");
+    Serial.println("Can't write BM1422AGMV_CNTL3 Register");
     return (rc);
   }
 
-  do {
-    rc = read(BM1422_STA1, &reg, 1);
-    if (rc != 0) {
-      Serial.println("Can't read BM1422_STA1 Register");
-      return (rc);
-    }
-  } while((reg & BM1422_STA1_RD_DRDY) != BM1422_STA1_RD_DRDY);
+  delay(2);
 
-  rc = read(BM1422_DATAX, data, 6);
+  rc = read(BM1422AGMV_DATAX, data, 6);
   if (rc != 0) {
-    Serial.println("Can't get BM1422 magnet values");
+    Serial.println("Can't get BM1422AGMV magnet values");
   }
 
   return (rc);
 }
 
-byte BM1422::get_val(float *data)
+byte BM1422AGMV::get_val(float *data)
 {
   byte rc;
   unsigned char val[6];
@@ -136,7 +139,7 @@ byte BM1422::get_val(float *data)
   return (rc);  
 }
 
-void BM1422::convert_uT(signed short *rawdata, float *data)
+void BM1422AGMV::convert_uT(signed short *rawdata, float *data)
 {
   // LSB to uT
   data[0] = (float)rawdata[0] / _sens;
@@ -144,7 +147,7 @@ void BM1422::convert_uT(signed short *rawdata, float *data)
   data[2] = (float)rawdata[2] / _sens;
 }
 
-byte BM1422::write(unsigned char memory_address, unsigned char *data, unsigned char size)
+byte BM1422AGMV::write(unsigned char memory_address, unsigned char *data, unsigned char size)
 {
   byte rc;
   unsigned int cnt;
@@ -156,7 +159,7 @@ byte BM1422::write(unsigned char memory_address, unsigned char *data, unsigned c
   return (rc);
 }
 
-byte BM1422::read(unsigned char memory_address, unsigned char *data, int size)
+byte BM1422AGMV::read(unsigned char memory_address, unsigned char *data, int size)
 {
   byte rc;
   unsigned char cnt;
