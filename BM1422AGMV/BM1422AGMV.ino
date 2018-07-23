@@ -24,29 +24,35 @@
 #include <Wire.h>
 #include "BM1422AGMV.h"
 
-BM1422 bm1422(BM1422_DEVICE_ADDRESS_0F);
+BM1422AGMV bm1422agmv(BM1422AGMV_DEVICE_ADDRESS_0F);
 
 void setup() {
   byte rc;
+  
   Serial.begin(115200);
   Serial.println("Rohm BM1422AGMV Magnet Sensor sample");
   Wire.begin();
-  rc = bm1422.init();
+  rc = bm1422agmv.init();
+  if (rc != 0) {
+    Serial.println(F("BM1422AGMV initialization failed"));
+    Serial.flush();
+  }
+  
 }
 
 void loop() {
   byte rc;
   float mag[3];
-  rc = bm1422.get_val(mag);
+  rc = bm1422agmv.get_val(mag);
 
   if (rc == 0) {
-    Serial.println("BM1422 XDATA=");
+    Serial.print("BM1422AGMV XDATA=");
     Serial.print(mag[0], 3);
     Serial.println("[uT]");
-    Serial.println("BM1422 YDATA=");
+    Serial.print("BM1422AGMV YDATA=");
     Serial.print(mag[1], 3);
     Serial.println("[uT]");
-    Serial.println("BM1422 ZDATA=");
+    Serial.print("BM1422AGMV ZDATA=");
     Serial.print(mag[2], 3);
     Serial.println("[uT]");
     Serial.println();    
