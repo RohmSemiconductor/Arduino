@@ -34,6 +34,8 @@ https://developer.sony.com/develop/spresense/
 
  The example sketches are located in the same directory as the drivers.
  
+ The evaluation board sensors can be attached to the Sensor Add-on board, and should work without problems.
+ 
 ###  Installing the sensor & BLE example sketches ###
 
 1. Place the example sketches inside your Arduino folder, which should be located in your users documents folder
