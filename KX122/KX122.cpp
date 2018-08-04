@@ -19,7 +19,7 @@
 ******************************************************************************/
 //#include <avr/pgmspace.h>
 #include <Wire.h>
-#include <arduino.h>
+#include <Arduino.h>
 #include "KX122.h"
 
 KX122::KX122(int slave_address)

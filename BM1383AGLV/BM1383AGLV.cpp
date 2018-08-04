@@ -22,7 +22,7 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include "arduino.h"
+#include "Arduino.h"
 #include "BM1383AGLV.h"
 
 BM1383AGLV::BM1383AGLV(void)

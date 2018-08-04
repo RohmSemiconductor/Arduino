@@ -22,7 +22,7 @@
  THE SOFTWARE.
 ******************************************************************************/
 
-#include "arduino.h"
+#include "Arduino.h"
 #include "MK71251.h"
 
 

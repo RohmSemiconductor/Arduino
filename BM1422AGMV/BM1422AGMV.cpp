@@ -22,7 +22,7 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include "arduino.h"
+#include "Arduino.h"
 #include "BM1422AGMV.h"
 
 BM1422AGMV::BM1422AGMV(int slave_address)
