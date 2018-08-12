@@ -1,5 +1,5 @@
 /*****************************************************************************
-  KX122.ino
+  Sensors-Add-on-Demo.ino
  Copyright (c) 2018 ROHM Co.,Ltd.
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -18,9 +18,13 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include "KX122.h"
+#include <KX122.h>
+#include <BM1422AGMV.h>
+#include <BM1383AGLV.h>
 
 KX122 kx122(KX122_DEVICE_ADDRESS_1F);
+BM1422AGMV bm1422agmv(BM1422AGMV_DEVICE_ADDRESS_0F);
+BM1383AGLV bm1383aglv;
 
 void setup() {
   byte rc;
@@ -35,11 +39,24 @@ void setup() {
     Serial.println(F("KX122 initialization failed"));
     Serial.flush();
   }
+
+  rc = bm1422agmv.init();
+  if (rc != 0) {
+    Serial.println(F("BM1422AGMV initialization failed"));
+    Serial.flush();
+  }
+
+  rc = bm1383aglv.init();
+  if (rc != 0) {
+    Serial.println("BM1383AGLV initialization failed");
+    Serial.flush();
+  }
+
 }
 
 void loop() {
   byte rc;
-  float acc[3];
+  float acc[3], mag[3], press = 0, temp = 0;
 
   rc = kx122.get_val(acc);
   if (rc == 0) {
@@ -52,9 +69,33 @@ void loop() {
     Serial.write("KX122 (Z) = ");
     Serial.print(acc[2]);
     Serial.println(" [g]");
+  }
+
+  rc = bm1422agmv.get_val(mag);
+
+  if (rc == 0) {
+    Serial.print("BM1422AGMV XDATA=");
+    Serial.print(mag[0], 3);
+    Serial.println("[uT]");
+    Serial.print("BM1422AGMV YDATA=");
+    Serial.print(mag[1], 3);
+    Serial.println("[uT]");
+    Serial.print("BM1422AGMV ZDATA=");
+    Serial.print(mag[2], 3);
+    Serial.println("[uT]");
+  }
+  
+  rc = bm1383aglv.get_val(&press, &temp);
+  if (rc == 0) {
+    Serial.print("BM1383AGLV (PRESS) = ");
+    Serial.print(press);
+    Serial.println(" [hPa]");
+    Serial.print("BM1383AGLV (TEMP) =  ");
+    Serial.print(temp);
+    Serial.println(" [degrees Celsius]");    
     Serial.println();
   }
- 
+
   delay(500);
 
 }
