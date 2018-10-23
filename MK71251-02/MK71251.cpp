@@ -39,6 +39,7 @@ byte MK71251::init(void)
   digitalWrite(PIN_D21, LOW);
 
   // reset BLE chip
+  delay(500);
   pinMode(PIN_D20, OUTPUT);
   digitalWrite(PIN_D20, LOW);
   delay(10);
@@ -56,6 +57,13 @@ byte MK71251::init(void)
 
   printf("MK71251-02: CTS:LOW read succesfully\n");
 
+  // define advertising data
+  // 020106 -> Flags: LE General Discoverable Mode, BR/EDR Not Supported
+  // 05030f18180a -> Complete List of 16bit Service UUIDs: 180f, 180a
+  // 09084c61706973446576 -> Complete Local Name: LapisDev
+  Serial2.write("ATS150=02010605030f180a1809084c61706973446576\r\n");
+
+  // start advertising
   Serial2.write("ATD\r\n");
 
   printf("MK71251-02: waiting for connection...\n");
