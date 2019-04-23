@@ -66,7 +66,7 @@ byte KX126::init(void)
   
   if (reg != KX126_WAI_VAL) {
     Serial.println("Can't find KX126");
-    return (rc);
+    return (-1);
   }
   
   reg = KX126_CNTL1_VAL;

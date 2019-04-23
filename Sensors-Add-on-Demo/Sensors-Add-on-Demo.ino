@@ -19,15 +19,20 @@
 ******************************************************************************/
 #include <Wire.h>
 #include <KX122.h>
+#include <KX126.h>
 #include <BM1422AGMV.h>
 #include <BM1383AGLV.h>
 
 KX122 kx122(KX122_DEVICE_ADDRESS_1F);
+KX126 kx126(KX126_DEVICE_ADDRESS_1F);
 BM1422AGMV bm1422agmv(BM1422AGMV_DEVICE_ADDRESS_0F);
 BM1383AGLV bm1383aglv;
+bool KX122_found = false;
+bool KX126_found = false;
 
 void setup() {
   byte rc;
+
 
   Serial.begin(115200);
   while (!Serial);
@@ -36,10 +41,22 @@ void setup() {
 
   rc = kx122.init();
   if (rc != 0) {
-    Serial.println(F("KX122 initialization failed"));
     Serial.flush();
+  }else{
+    KX122_found = true;
   }
 
+  rc = kx126.init();
+  if (rc != 0) {
+    Serial.flush();
+  }else{
+    KX126_found = true;
+  }
+
+  if(!KX122_found && !KX126_found){
+    Serial.println(F("KX122/KX126 initialization failed"));
+  }
+  
   rc = bm1422agmv.init();
   if (rc != 0) {
     Serial.println(F("BM1422AGMV initialization failed"));
@@ -58,17 +75,34 @@ void loop() {
   byte rc;
   float acc[3], mag[3], press = 0, temp = 0;
 
-  rc = kx122.get_val(acc);
-  if (rc == 0) {
-    Serial.write("KX122 (X) = ");
-    Serial.print(acc[0]);
-    Serial.println(" [g]");
-    Serial.write("KX122 (Y) = ");
-    Serial.print(acc[1]);
-    Serial.println(" [g]");
-    Serial.write("KX122 (Z) = ");
-    Serial.print(acc[2]);
-    Serial.println(" [g]");
+  if(KX122_found){
+    rc = kx122.get_val(acc);
+    if (rc == 0) {
+      Serial.write("KX122 (X) = ");
+      Serial.print(acc[0]);
+      Serial.println(" [g]");
+      Serial.write("KX122 (Y) = ");
+      Serial.print(acc[1]);
+      Serial.println(" [g]");
+      Serial.write("KX122 (Z) = ");
+      Serial.print(acc[2]);
+      Serial.println(" [g]");
+    }
+  }
+
+  if(KX126_found){
+    rc = kx126.get_val(acc);
+    if (rc == 0) {
+      Serial.write("KX126 (X) = ");
+      Serial.print(acc[0]);
+      Serial.println(" [g]");
+      Serial.write("KX126 (Y) = ");
+      Serial.print(acc[1]);
+      Serial.println(" [g]");
+      Serial.write("KX126 (Z) = ");
+      Serial.print(acc[2]);
+      Serial.println(" [g]");
+    }
   }
 
   rc = bm1422agmv.get_val(mag);
@@ -99,4 +133,3 @@ void loop() {
   delay(500);
 
 }
-

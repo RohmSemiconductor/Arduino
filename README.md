@@ -3,6 +3,8 @@ Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
 
 ## Supported devices
 * Accelerometer KX122, I2C, SAD=0x1F
+* Accelerometer KX126, I2C, SAD=0x1F
+* Accelerometer KX132, I2C, SAD=0x1F
 * Accelerometer KX224, I2C, SAD=<B>0x1E</B>*/0x1F
 * Magnetosensor BM1422AGMV, I2C, SAD=0x0F
 * Pressure sensor BM1383AGLV, I2C, SAD=0x5D

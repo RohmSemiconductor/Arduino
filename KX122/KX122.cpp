@@ -43,7 +43,7 @@ byte KX122::init(void)
   
   if (reg != KX122_WAI_VAL) {
     Serial.println("Can't find KX122");
-    return (rc);
+    return (-1);
   }
 
   reg = KX122_CNTL1_VAL;
