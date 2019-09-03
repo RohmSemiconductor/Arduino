@@ -11,6 +11,7 @@ Arduino libraries and samples for Rohm Sensors, Wi-SUN, &amp; Bluetooth LE
 * Color sensor BH1749NUC, I2C, SAD=0x38/<B>0x39</B>*
 * ALS/Proximity sensor RPR-0521RS, I2C, SAD=0x38
 * Hall Effect sensor BD7411G, GPIO
+* Wi-SUN BP35C0, UART
 * Bluetooth LE MK71251-02, UART
 
 *Boldened is default device address 
