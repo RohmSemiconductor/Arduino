@@ -1,5 +1,5 @@
 # Overview of this repository
-Arduino libraries and samples for Rohm Sensors &amp; Bluetooth LE
+Arduino libraries and samples for Rohm Sensors, Wi-SUN, &amp; Bluetooth LE
 
 ## Supported devices
 * Accelerometer KX122, I2C, SAD=0x1F
