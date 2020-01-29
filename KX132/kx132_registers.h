@@ -1,6 +1,6 @@
 /*
 The MIT License (MIT)
-Copyright (c) 2017 Kionix Inc.
+Copyright (c) 2020 ROHM Co.,Ltd.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
