@@ -156,7 +156,7 @@ static struct kx13x_cfg *kx13x_ex_get_wu_bts_interrupt_cfg(struct kx13x *dev)
 	return &main_cfg;
 }
 
-/* KX13X_EXAMPLE_WU_BTS_INTERRUPT */
+/* KX13X_EXAMPLE_ADP_DATA */
 static struct kx13x_cfg *kx13x_ex_get_adp_data_cfg(struct kx13x *dev)
 {
 	UNUSED_VAR(dev);
