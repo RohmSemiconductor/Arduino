@@ -42,7 +42,7 @@ https://developer.sony.com/develop/spresense/
 ###  Installing the sensor & BLE example sketches ###
 
  For help regarding the installation of driver library to Arduino IDE please refer to
- [Installing driver library and examples] (https://www.arduino.cc/en/Guide/Libraries/ "Title")
+ [Installing driver library and examples](https://www.arduino.cc/en/Guide/Libraries/ "Title")
  
 ![](images/add_library.png)
 
