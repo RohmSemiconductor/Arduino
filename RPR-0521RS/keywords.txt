@@ -1,0 +1,8 @@
+RPR0521RS	KEYWORD1
+init	KEYWORD2
+get_rawpsalsval	KEYWORD2
+get_psalsval	KEYWORD2
+check_near_far	KEYWORD2
+convert_lx	KEYWORD2
+write	KEYWORD2
+read	KEYWORD2

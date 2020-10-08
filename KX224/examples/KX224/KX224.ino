@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BD7411.ino
+  KX224_I2C.ino
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -21,34 +21,44 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#include "BD7411.h"
-#include <Arduino.h>
+#include <Wire.h>
+#include "KX224.h"
 
-int hallout_pin = 0; // use D0 pin (extension board)
-
-BD7411 bd7411;
+KX224 kx224(KX224_DEVICE_ADDRESS_1E);
 
 void setup() {
+  byte rc;
 
   Serial.begin(115200);
   while (!Serial);
 
-  bd7411.init(hallout_pin);
+  Wire.begin();
 
-  Serial.println("BD7411G Sample");
+  rc = kx224.init();
+  if (rc != 0) {
+    Serial.println("KX224 initialization failed");
+    Serial.flush();
+  }
 }
 
 void loop() {
+  byte rc;
+  float acc[3];
 
-  int hallout;
-
-  hallout = bd7411.readoutpin();
-  if (hallout == 0) {
-    Serial.println("BD7411G Magnet field Detect!");
-  } else {
+  rc = kx224.get_val(acc);
+  if (rc == 0) {
+    Serial.write("KX224 (X) = ");
+    Serial.print(acc[0]);
+    Serial.println(" [g]");
+    Serial.write("KX224 (Y) = ");
+    Serial.print(acc[1]);
+    Serial.println(" [g]");
+    Serial.write("KX224 (Z) = ");
+    Serial.print(acc[2]);
+    Serial.println(" [g]");
     Serial.println();
   }
-
+ 
   delay(500);
-}
 
+}

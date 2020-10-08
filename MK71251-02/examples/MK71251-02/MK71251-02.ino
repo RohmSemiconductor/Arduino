@@ -1,4 +1,5 @@
- #include "MK71251.h"
+#include <Wire.h>
+#include "MK71251.h"
 #include <string.h>
 
 MK71251 mk71251;

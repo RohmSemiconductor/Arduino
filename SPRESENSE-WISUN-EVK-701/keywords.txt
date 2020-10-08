@@ -1,0 +1,6 @@
+BP35C0J11	KEYWORD1
+j11_init	KEYWORD2
+wait_msg	KEYWORD2
+cmd_send	KEYWORD2
+msg_create	KEYWORD2
+debugmsg	KEYWORD2

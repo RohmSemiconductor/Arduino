@@ -36,6 +36,10 @@ unsigned const char radiodata[4] = { 'T' , 'E' , 'S' , 'T' };         // 送信�
 
 CMD_FORMAT cmd_format;
 
+BP35C0J11::BP35C0J11(void)
+{
+	
+}
 
 /********************************************************************************
 *   Name     : j11_init
@@ -43,7 +47,7 @@ CMD_FORMAT cmd_format;
 *   input    : -
 *   return   : -
 *********************************************************************************/
-void j11_init(void) {
+void BP35C0J11::j11_init(void) {
 
   // configure output D20/D21
   pinMode(PIN_ENABLE, OUTPUT);      
@@ -71,7 +75,7 @@ void j11_init(void) {
 *   input    : -
 *   return   : TRUE/FALSE
 *********************************************************************************/
-boolean wait_msg(void)
+boolean BP35C0J11::wait_msg(void)
 {
   unsigned long start_time;
   unsigned long current_time;
@@ -200,7 +204,7 @@ boolean wait_msg(void)
 *   input    : cmd  - REQUEST command 
 *   return   : TRUE/FALSE
 *********************************************************************************/
-boolean cmd_send(unsigned short cmd) {
+boolean BP35C0J11::cmd_send(unsigned short cmd) {
   unsigned short hdr_chksum = uni_req[0] + uni_req[1] + uni_req[2] + uni_req[3] ;
   unsigned short dat_chksum = 0 ;
   unsigned short msg_length = 0 ;
@@ -361,7 +365,7 @@ boolean cmd_send(unsigned short cmd) {
                *psend_data- request command format data
 *   return   : -
 *********************************************************************************/
-void static msg_create(unsigned short cmd , unsigned short msg_length , unsigned short hdr_chksum , unsigned short dat_chksum, unsigned char *pdata , unsigned char *psend_data )
+void static BP35C0J11::msg_create(unsigned short cmd , unsigned short msg_length , unsigned short hdr_chksum , unsigned short dat_chksum, unsigned char *pdata , unsigned char *psend_data )
 {
   unsigned char cnt = 0 ;
 
@@ -394,7 +398,7 @@ void static msg_create(unsigned short cmd , unsigned short msg_length , unsigned
                psend_data - output data pointer
 *   return   : -
 *********************************************************************************/
-void debugmsg(unsigned short datalength , unsigned char* psend_data) {
+void BP35C0J11::debugmsg(unsigned short datalength , unsigned char* psend_data) {
   unsigned char cnt = 0 ;
 
   for ( cnt = 0 ; cnt < datalength ; cnt++) {

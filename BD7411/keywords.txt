@@ -1,0 +1,3 @@
+BD7411	KEYWORD1
+init	KEYWORD2
+readoutpin	KEYWORD2

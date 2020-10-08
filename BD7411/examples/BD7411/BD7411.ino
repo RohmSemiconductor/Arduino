@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BM1422AGMV.ino
+  BD7411.ino
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -21,42 +21,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ******************************************************************************/
-#include <Wire.h>
-#include "BM1422AGMV.h"
+#include "BD7411.h"
+#include <Arduino.h>
 
-BM1422AGMV bm1422agmv(BM1422AGMV_DEVICE_ADDRESS_0F);
+int hallout_pin = 0; // use D0 pin (extension board)
+
+BD7411 bd7411;
 
 void setup() {
-  byte rc;
-  
+
   Serial.begin(115200);
-  Serial.println("Rohm BM1422AGMV Magnet Sensor sample");
-  Wire.begin();
-  rc = bm1422agmv.init();
-  if (rc != 0) {
-    Serial.println(F("BM1422AGMV initialization failed"));
-    Serial.flush();
-  }
-  
+  while (!Serial);
+
+  bd7411.init(hallout_pin);
+
+  Serial.println("BD7411G Sample");
 }
 
 void loop() {
-  byte rc;
-  float mag[3];
-  rc = bm1422agmv.get_val(mag);
 
-  if (rc == 0) {
-    Serial.print("BM1422AGMV XDATA=");
-    Serial.print(mag[0], 3);
-    Serial.println("[uT]");
-    Serial.print("BM1422AGMV YDATA=");
-    Serial.print(mag[1], 3);
-    Serial.println("[uT]");
-    Serial.print("BM1422AGMV ZDATA=");
-    Serial.print(mag[2], 3);
-    Serial.println("[uT]");
-    Serial.println();    
+  int hallout;
+
+  hallout = bd7411.readoutpin();
+  if (hallout == 0) {
+    Serial.println("BD7411G Magnet field Detect!");
+  } else {
+    Serial.println();
   }
 
   delay(500);
 }
+

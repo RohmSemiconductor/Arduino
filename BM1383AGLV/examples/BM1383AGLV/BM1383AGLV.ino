@@ -1,5 +1,5 @@
 /*****************************************************************************
-  BH1749NUC.ino
+  BM1383AGLV.ino
 
  Copyright (c) 2018 ROHM Co.,Ltd.
 
@@ -22,44 +22,41 @@
  THE SOFTWARE.
 ******************************************************************************/
 #include <Wire.h>
-#include "BH1749NUC.h"
+#include "BM1383AGLV.h"
 
-BH1749NUC bh1749nuc(BH1749NUC_DEVICE_ADDRESS_39);
+BM1383AGLV bm1383aglv;
 
 void setup() {
   byte rc;
-
+ 
   Serial.begin(115200);
   while (!Serial);
 
   Wire.begin();
 
-  rc = bh1749nuc.init();
+  rc = bm1383aglv.init();
   if (rc != 0) {
-    Serial.println("BH1749NUC initialization failed");
+    Serial.println("BM1383AGLV initialization failed");
     Serial.flush();
   }
 }
 
 void loop() {
   byte rc;
-  unsigned short color[5];
+  float press = 0, temp = 0;
 
-  rc = bh1749nuc.get_val(color);
+  rc = bm1383aglv.get_val(&press, &temp);
   if (rc == 0) {
-    Serial.write("BH1749NUC (RED)    = ");
-    Serial.println(color[0]);
-    Serial.write("BH1749NUC (GREEN)  = ");
-    Serial.println(color[1]);
-    Serial.write("BH1749NUC (BLUE)   = ");
-    Serial.println(color[2]);
-    Serial.write("BH1749NUC (IR)     = ");
-    Serial.println(color[3]);
-    Serial.write("BH1749NUC (GREEN2) = ");
-    Serial.println(color[4]);
+    Serial.print("BM1383AGLV (PRESS) = ");
+    Serial.print(press);
+    Serial.println(" [hPa]");
+    Serial.print("BM1383AGLV (TEMP) =  ");
+    Serial.print(temp);
+    Serial.println(" [degrees Celsius]");    
     Serial.println();
   }
 
-  delay(WAIT_TMT2_MAX);
+  delay(500);
 
 }
+

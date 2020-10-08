@@ -25,10 +25,12 @@
 
 unsigned char state = 0 ;
 
+BP35C0J11 bp35c0j11;
+
 void setup() {
   boolean rc = FALSE ;
-  j11_init();
-  rc = wait_msg();
+  bp35c0j11.j11_init();
+  rc = bp35c0j11.wait_msg();
   if(rc == TRUE){
     state = 1 ;           //  hardware reset end 
   }else{
@@ -51,70 +53,70 @@ void loop() {
   delay(500);
   switch (state) {
     case(0):   // need hardware reset 
-      rc = cmd_send(CMD_RESET);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_RESET);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 1 ;
       }
     break;
     case(1):  //  init state 
-      rc = cmd_send(CMD_INI);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_INI);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 2;
       }
       break;
     case(2): // HAN PANA setting
-      rc = cmd_send(CMD_PANA_SET);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_PANA_SET);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 4;
       }
       break;
     case(3): // active scan
-      rc = cmd_send(CMD_SCAN);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_SCAN);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
-        rc = wait_msg();
+        rc = bp35c0j11.wait_msg();
         if(rc == TRUE){
           state = 4;
         }
       }
       break;
     case(4): //  HAN act
-      rc = cmd_send(CMD_HAN);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_HAN);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 5;
       }
       break;
     case(5): // HAN PANA act
-      rc = cmd_send(CMD_PANA);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_PANA);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
-        rc = wait_msg();
+        rc = bp35c0j11.wait_msg();
         if(rc == TRUE){
             state = 7;
         }
       }
       break;
     case(6): // rcv mode change
-      rc = cmd_send(CMD_CON_SET);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_CON_SET);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 7;
       }
       break;
     case(7): // my_port open
-      rc = cmd_send(CMD_PORTOPEN);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_PORTOPEN);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         state = 8;
       }
       break;
     case(8): // UDP send
-      rc = cmd_send(CMD_UDPSEND);
-      rc = wait_msg();
+      rc = bp35c0j11.cmd_send(CMD_UDPSEND);
+      rc = bp35c0j11.wait_msg();
       if(rc == TRUE){
         delay(5000);
       }

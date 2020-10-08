@@ -68,11 +68,16 @@ typedef struct {
   unsigned char data[128];
 }CMD_FORMAT;
 
-void j11_init(void);
-boolean wait_msg(void);
-boolean cmd_send(unsigned short cmd);
-void static msg_create(unsigned short cmd , unsigned short msg_length ,unsigned short hdr_chksum , unsigned short dat_chksum, unsigned char *pdata , unsigned char *psend_data );
-void static debugmsg(unsigned short datalength , unsigned char *psend_data);
-
+class BP35C0J11
+{
+	public:
+		BP35C0J11(void);
+		void j11_init(void);
+		boolean wait_msg(void);
+		boolean cmd_send(unsigned short cmd);
+		void static msg_create(unsigned short cmd , unsigned short msg_length ,unsigned short hdr_chksum , unsigned short dat_chksum, unsigned char *pdata , unsigned char *psend_data );
+	private:
+		void static debugmsg(unsigned short datalength , unsigned char *psend_data);
+};
 #endif    //_BP35C0J11_H_
 

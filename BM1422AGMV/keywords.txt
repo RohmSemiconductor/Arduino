@@ -1,0 +1,7 @@
+BM1422AGMV	KEYWORD1
+init	KEYWORD2
+get_rawval	KEYWORD2
+get_val	KEYWORD2
+convert_uT	KEYWORD2
+write	KEYWORD2
+read	KEYWORD2
