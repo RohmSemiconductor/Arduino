@@ -1,6 +1,6 @@
 /*
 The MIT License (MIT)
-Copyright (c) 2020 ROHM Co.,Ltd.
+Copyright (c) 2020 Rohm Semiconductor
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
@@ -376,10 +376,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define KX132_1211_CNTL6_I2C_ALC_2P0 (0x02 << 0)
 // 4.0sec
 #define KX132_1211_CNTL6_I2C_ALC_4P0 (0x03 << 0)
-// IIR filter is not bypassed
-#define KX132_1211_ODCNTL_IIR_BYPASS_NOT_BYPASSED (0x00 << 7)
-// IIR filter is bypassed
-#define KX132_1211_ODCNTL_IIR_BYPASS_BYPASSED (0x01 << 7)
 // IIR filter corner frequency set to ODR/9 (default)
 #define KX132_1211_ODCNTL_LPRO_ODR_9 (0x00 << 6)
 // IIR filter corner frequency set to ODR/2
@@ -687,8 +683,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define KX132_1211_CNTL6_I2C_ALE_MASK 0x80
 // I2C auto release function counter select
 #define KX132_1211_CNTL6_I2C_ALC_MASK 0x03
-// IIR Filter Bypass mode enable bit
-#define KX132_1211_ODCNTL_IIR_BYPASS_MASK 0x80
 // Low-Pass filter roll off control. LPRO = 0 - filter corner frequency set to ODR/9, LPRO = 1 - filter corner frequency set to ODR/2
 #define KX132_1211_ODCNTL_LPRO_MASK 0x40
 // Fast Start Up Enable bit.
@@ -741,3 +735,4 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define KX132_1211_ADP_CNTL18_ADP_F2_ISH_MASK 0x1F
 #define KX132_1211_ADP_CNTL19_ADP_F2_OSH_MASK 0x1F
 #endif
+

@@ -105,10 +105,9 @@ int kx13x_set_odr(struct kx13x *dev, uint8_t odr);
 int kx13x_set_drdy_enabled(struct kx13x *dev, uint8_t enable);
 
 /* KX13X low pass filter */
-#define KX13X_BYPASS_BYPASSED	0
-#define KX13X_BYPASS_ODR_2		1
-#define KX13X_BYPASS_ODR_9		2
-#define KX13X_BYPASS_AMOUNT		3
+#define KX13X_BYPASS_ODR_2    0
+#define KX13X_BYPASS_ODR_9    1
+#define KX13X_BYPASS_AMOUNT   2
 int kx13x_set_low_pass_filter(struct kx13x *dev, uint8_t filter);
 
 /* KX13X avg filter */

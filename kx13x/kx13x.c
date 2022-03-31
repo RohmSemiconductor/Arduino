@@ -482,20 +482,16 @@ int kx13x_set_drdy_enabled(struct kx13x *dev, uint8_t enable)
 static struct kx13x_define_reg_map bypass_map = 
 {
 	.reg = KX132_1211_ODCNTL,
-	.mask = (KX132_1211_ODCNTL_IIR_BYPASS_MASK | KX132_1211_ODCNTL_LPRO_MASK),
+	.mask = (KX132_1211_ODCNTL_LPRO_MASK),
 	.amount = KX13X_BYPASS_AMOUNT,
 	.values = {
 		{
-			._define = KX13X_BYPASS_BYPASSED,
-			._reg_bits = KX132_1211_ODCNTL_IIR_BYPASS_BYPASSED,
-		},
-		{
 			._define = KX13X_BYPASS_ODR_2,
-			._reg_bits = KX132_1211_ODCNTL_IIR_BYPASS_NOT_BYPASSED | KX132_1211_ODCNTL_LPRO_ODR_2,
+			._reg_bits = KX132_1211_ODCNTL_LPRO_ODR_2,
 		},
 		{
 			._define = KX13X_BYPASS_ODR_9,
-			._reg_bits = KX132_1211_ODCNTL_IIR_BYPASS_NOT_BYPASSED | KX132_1211_ODCNTL_LPRO_ODR_9,
+			._reg_bits = KX132_1211_ODCNTL_LPRO_ODR_9,
 		},
 	}
 };
