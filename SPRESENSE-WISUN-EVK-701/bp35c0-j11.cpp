@@ -213,7 +213,6 @@ boolean BP35C0J11::cmd_send(unsigned short cmd) {
   unsigned char data[128] = {0};
 
   unsigned char send_data[128] = {0} ;
-  boolean rc = FALSE;
   unsigned char cnt = 0 ;
 
   switch (cmd) {
@@ -352,6 +351,8 @@ boolean BP35C0J11::cmd_send(unsigned short cmd) {
 
       break;
   }
+
+  return TRUE;
 }
 
 /********************************************************************************

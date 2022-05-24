@@ -80,6 +80,8 @@ byte KX122::init(void)
     case KX122_CNTL1_GSEL_8G : _g_sens = 4096;  break;
     default: break;
   }
+
+  return (rc);
 }
 
 byte KX122::get_rawval(unsigned char *data)
