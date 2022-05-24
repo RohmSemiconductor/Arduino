@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 *********************************************************************************/
-#include <arduino.h>
+#include <Arduino.h>
 #include "bp35c0-j11.h"
 
 unsigned const char uni_req[4] = {0xD0 , 0xEA , 0x83 , 0xFC};
